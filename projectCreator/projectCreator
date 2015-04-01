@@ -3,6 +3,7 @@
 if [[ $* == *--help* ]] ; then
 	cat $PWD/README.txt
 else
+	mkdir -p $PWD/$1
 	mkdir -p $PWD/$1/tests
 	mkdir -p $PWD/$1/examples
 	echo ' Usage: '$1' [arguments]' > $PWD/$1/README.txt

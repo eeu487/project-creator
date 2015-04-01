@@ -1,0 +1,16 @@
+#!/bin/bash
+
+projectName=$2
+projectType=$1
+
+if [[ $* == *--help* ]] ; then
+	cat $PWD/README.txt
+else
+	if [ -d $PWD/templates/$projectType ] ; then 
+		mkdir -p $PWD/$projectName
+		cp -r $PWD/templates/$projectType/* $PWD/$projectName
+		echo Created project $projectName of type $projectType 
+	else
+		echo Error: template $projectType does not exist
+	fi
+fi
