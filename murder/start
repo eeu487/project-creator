@@ -1,0 +1,57 @@
+#!/bin/bash
+
+#Variables used by the script
+forenames=("")
+surnames=("")
+
+#Print the readme file
+cat $PWD/README.txt
+
+#Set the forename array to be filled by the file forenames
+i=0
+while read line
+do
+	i=$(expr $i + 1)
+	name=$line
+	forenames[i]=$name
+done < "$PWD/game-files/forenames"
+
+#Reset i and fill the surname array to be filled by the file surnames
+j=0
+while read line
+do
+	j=$(expr $j + 1)
+	name=$line
+	surnames[j]=$name
+done < "$PWD/game-files/surnames"
+
+#Get random numbers for the names
+guiltyForeName=$[ 1 + $[ RANDOM % i]]
+guiltySurName=$[ 1 + $[ RANDOM % j]]
+
+#Send the hashed version of the name with a salt to a hidden file
+echo "${forenames[guiltyName]} ${surnames[guiltySurName]} salt" | md5sum > $PWD/game-files/.murderer
+
+#Make a victim and give it a name
+numberForeName=$[ 1 + $[RANDOM % i]]
+numberSurName=$[ 1 + $[RANDOM % j]]
+echo "${forenames[numberForeName]} ${surnames[numberSurName]}" > $PWD/game-files/.victim
+victimname="${forenames[numberForeName]} ${surnames[numberSurName]}"
+
+#Create a innocents file with some innocent people
+> $PWD/suspects
+whichInnocentIsGuilty=$[ 1 + $[RANDOM % 10]]
+for t in `seq 1 10`; do
+	if [ $t != $whichInnocentIsGuilty ]; then
+	numberForeName=$[ 1 + $[RANDOM % i]]
+	numberSurName=$[ 1 + $[RANDOM % j ]]
+	echo "${forenames[numberForeName]} ${surnames[numberSurName]}" >> $PWD/suspects
+else
+	echo "GUILTY ${forenames[guiltyForeName]} ${surnames[guiltySurName]}" >>$PWD/suspects
+fi	
+done
+
+#The setup
+echo "Luitenant Jenkins:
+Ah detective $1 you've arrived, it appears we have a murder on our hands! None other then $victimname was found dead in $scene we'll give you everyting we got on the murder but no it's up to you!
+Goodluck sir"

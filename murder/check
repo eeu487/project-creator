@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ "$1" == "--help" ]; then
+	echo "The command works by typing in ./check followed by the first name a space and then the second name"
+else
+	#Hashes the argument
+	echo "$1 $2 salt" | md5sum > $PWD/game-files/.guess
+
+	guessHash=$(cat $PWD/game-files/.guess) 
+	murdererHash=$(cat $PWD/game-files/.murderer)
+
+	#Checks if the name guessed is correct
+	if [ "$guessHash" == "$murdererHash" ]; then
+		echo "Congradulations you caught $1 $2!"
+	else
+		echo "$1 $2 was not the murderer"
+	fi
+fi
+

@@ -1,0 +1,9 @@
+How to Play:
+Enter the crime scene and begin questioning suspects as well as identifying potential weapons and clues.
+
+Commands:
+identify [object] - Tells you some fun things about an object
+question [person] - Questions someone in your crime scene room
+check [person] - Accuse one of your suspects of the murder
+
+Note: You can only check 3 times before you lose the game so be careful!
